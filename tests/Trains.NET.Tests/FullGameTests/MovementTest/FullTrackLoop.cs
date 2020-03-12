@@ -35,44 +35,6 @@ namespace Trains.NET.Tests.FullGameTests.MovementTest
             _movementSteps = movementSteps;
         }
 
-        [Fact]
-        public void MovementTest_FullTrackLoop_3HorizontalTracks_MovingRight()
-        {
-            var board = new GameBoard(false);
-
-            board.AddTrack(1, 1);
-            board.AddTrack(2, 1);
-            board.AddTrack(3, 1);
-
-            board.AddTrain(1, 1);
-
-            Train train = board.GetTrains().Single();
-
-            // We start in the middle of the left track
-            //  and want to end up at the middle of the right track 
-
-            // This is more of an Arrange Act Assert Act Assert test :P
-
-            Assert.Equal(1, train.Column);
-            Assert.Equal(1, train.Row);
-            Assert.Equal(0.5f, train.RelativeLeft, MovementPrecision);
-            Assert.Equal(0.5f, train.RelativeTop, MovementPrecision);
-            Assert.Equal(0.0f, train.Angle, MovementPrecision);
-
-            // Traveling from middle of 1 straight + whole 2nd straight + to middle of 3rd straight
-            float distance = 0.5f + 1.0f + 0.5f;
-
-            // Move it!
-            for (int i = 0; i < _movementSteps; i++)
-                board.GameLoopStep(distance / _movementSteps);
-
-            Assert.Equal(3, train.Column);
-            Assert.Equal(1, train.Row);
-            Assert.Equal(0.5f, train.RelativeLeft, MovementPrecision);
-            Assert.Equal(0.5f, train.RelativeTop, MovementPrecision);
-            Assert.Equal(0.0f, train.Angle, MovementPrecision);
-        }
-
         [Theory]
         [InlineData(0.0f)]
         [InlineData(180.0f)]
