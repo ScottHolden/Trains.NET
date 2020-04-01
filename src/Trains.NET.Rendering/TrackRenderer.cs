@@ -27,7 +27,7 @@ namespace Trains.NET.Rendering
             _arcTrackClear = new SKPaint()
             {
                 Style = SKPaintStyle.Stroke,
-                Color = SKColors.White,
+                Color = SKColors.LimeGreen,
                 IsAntialias = true
             };
             _arcTrackPaint = new SKPaint()
@@ -46,7 +46,7 @@ namespace Trains.NET.Rendering
             };
             _straightTrackClear = new SKPaint
             {
-                Color = SKColors.White,
+                Color = SKColors.LimeGreen,
                 Style = SKPaintStyle.Fill,
                 StrokeWidth = 0
             };

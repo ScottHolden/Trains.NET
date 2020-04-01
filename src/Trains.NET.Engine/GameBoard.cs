@@ -19,16 +19,32 @@ namespace Trains.NET.Engine
         public GameBoard()
         {
             _gameLoopTimer = new Timer(GameLoopInterval);
-            _gameLoopTimer.Elapsed += GameLoopStep;
+            _gameLoopTimer.Elapsed += GameLoopFire;
             _gameLoopTimer.Start();
         }
 
-        private void GameLoopStep(object sender, ElapsedEventArgs e)
+        public GameBoard(bool _)
+        {
+            _gameLoopTimer = new Timer(GameLoopInterval);
+        }
+
+        private void GameLoopFire(object sender, ElapsedEventArgs e)
         {
             _gameLoopTimer.Stop();
+
+            float distance = 0.005f * SpeedAdjustmentFactor;
+
+            GameLoopStep(distance);
+
+            _gameLoopTimer.Start();
+        }
+
+        public void GameLoopStep(float initalDistance)
+        {
             foreach (Train train in _trains)
             {
-                float distance = 0.005f * SpeedAdjustmentFactor;
+                float distance = initalDistance;
+
                 while (distance > 0.0f)
                 {
                     Track? track = GetTrackForTrain(train);
@@ -42,7 +58,6 @@ namespace Trains.NET.Engine
                     }
                 }
             }
-            _gameLoopTimer.Start();
         }
 
         public Track? GetTrackForTrain(Train train)

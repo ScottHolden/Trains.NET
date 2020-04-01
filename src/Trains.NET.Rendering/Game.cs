@@ -41,7 +41,7 @@ namespace Trains.NET.Rendering
             }
 
             canvas.Translate(1, 1);
-            canvas.Clear(SKColors.White);
+            canvas.Clear(SKColors.LimeGreen);
             canvas.ClipRect(new SKRect(0, 0, _width + 2, _height + 2), SKClipOperation.Intersect, false);
 
             foreach (ILayerRenderer renderer in _boardRenderers)

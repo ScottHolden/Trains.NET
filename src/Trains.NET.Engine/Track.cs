@@ -91,8 +91,10 @@ namespace Trains.NET.Engine
 
         private static void MoveRightUpDown(TrainPosition position)
         {
-            // if from left, its a left down track
-            if (position.Angle > 180.0)
+            // Right -> Up, Enters 180, Leaves 270
+            // Up -> Right, Enters 90, Leaves 0
+            // Down -> Right, Enters 270, Leaves 0
+            if (position.Angle >= 270.0)
             {
                 TrainMovement.MoveRightDown(position);
             }
