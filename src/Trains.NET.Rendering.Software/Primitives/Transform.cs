@@ -39,9 +39,10 @@ namespace Trains.NET.Rendering.Software
         }
         public Transform Rotate(float rotation) => new Transform(this.X, this.Y, this.Rotation + rotation);
 
-        public Point NormalisePoint(Point point) => Translate(point.X, point.Y).ToPoint();
+        public NormalisedPoint NormalisePoint(Point point) => Translate(point.X, point.Y).ToNormalisedPoint();
 
         public Point ToPoint() => new Point(this.X, this.Y);
+        private NormalisedPoint ToNormalisedPoint() => new NormalisedPoint(this.X, this.Y);
 
         public bool Equals(Transform other) => this.X == other.X &&
                                                         this.Y == other.Y &&

@@ -42,7 +42,10 @@ namespace Trains.NET.Rendering.Software
         public void DrawCircle(float x, float y, float radius, PaintBrush paint) =>
             _canvas.DrawCircle(new Point(x, y),
                                 radius,
-                                ColorToPixel(paint.Color ?? Defaults.Color));
+                                ColorToPixel(paint.Color ?? Defaults.Color),
+                                paint.StrokeWidth ?? Defaults.StrokeWidth,
+                                ShouldDrawStroke(paint.Style ?? Defaults.PaintStyle),
+                                ShouldDrawFill(paint.Style ?? Defaults.PaintStyle));
 
         public void DrawLine(float x1, float y1, float x2, float y2, PaintBrush paint) =>
             _canvas.DrawLine(new Point(x1, y1), 
