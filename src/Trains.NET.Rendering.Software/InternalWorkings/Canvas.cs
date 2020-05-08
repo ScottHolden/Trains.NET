@@ -33,6 +33,12 @@ namespace Trains.NET.Rendering.Software
             }
         }
 
+        public void DrawText(Point point, string text, Pixel source, int textSize)
+        {
+            // TODO: Text
+            // throw new NotImplementedException();
+        }
+
         public void Clear(Pixel source)
         {
             // TODO: Implement Copy doubling method, this is too slow!
@@ -46,6 +52,23 @@ namespace Trains.NET.Rendering.Software
             // TODO: Line width! Only support 1 width at the moment!
             DrawLine(start, end, source);
         }
+
+        public void DrawCircle(Point point, float radius, Pixel source)
+        {
+            Point normalisedCenter = _currentTransform.NormalisePoint(point);
+
+            float steps = 2.0f * (float)Math.PI * radius;
+
+            for (float i = 0; i < steps; i += PixelDensity)
+            {
+                float angle = i / steps * 2.0f * (float)Math.PI;
+
+                Point drawPoint = normalisedCenter.Add(radius * (float)Math.Cos(angle), radius * (float)Math.Sin(angle));
+
+                DrawPoint(drawPoint, source);
+            }
+        }
+
         public void DrawLine(Point start, Point end, Pixel source) =>
             FillNormalisedLine(_currentTransform.NormalisePoint(start),
                                 _currentTransform.NormalisePoint(end),
@@ -59,9 +82,11 @@ namespace Trains.NET.Rendering.Software
             {
                 Point drawPoint = normalisedStart.MapBetween(normalisedEnd, i, 0, steps);
 
-                _canvas[drawPoint.ToIndex(_width)] = source;
+                DrawPoint(drawPoint, source);
             }
         }
+
+        private void DrawPoint(Point normalisedPoint, Pixel source) => _canvas[normalisedPoint.ToIndex(_width)] = source;
 
         public void DrawLine(Point end, Pixel source, int strokeWidth) => DrawLine(Point.Zero, end, source, strokeWidth);
 

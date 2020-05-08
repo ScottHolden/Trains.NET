@@ -14,6 +14,7 @@ namespace Trains.NET.Rendering.Software
         public Point AddX(float value) => new Point(this.X + value, this.Y);
         public Point AddY(float value) => new Point(this.X, this.Y + value);
         public Point Add(Point value) => new Point(this.X + value.X, this.Y + value.Y);
+        public Point Add(float x, float y) => new Point(this.X + x, this.Y + y);
         public float DistanceTo(Point other) => (float)Math.Sqrt(Math.Pow(this.X - other.X, 2) + Math.Pow(this.Y - other.Y, 2));
         public Point MapBetween(Point other, float value, float min, float max) => new Point(
             (other.X - this.X) * ((value - min) / (max - min)) + this.X,

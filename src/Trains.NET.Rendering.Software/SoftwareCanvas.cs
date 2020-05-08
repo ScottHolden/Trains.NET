@@ -15,6 +15,7 @@ namespace Trains.NET.Rendering.Software
             public static readonly int StrokeWidth = 1;
             public static readonly PaintStyle PaintStyle = PaintStyle.Stroke;
             public static readonly Color Color = Colors.Black;
+            public static readonly int TextSize = 10;
         }
 
         public SoftwareCanvas(int width, int height)
@@ -24,24 +25,24 @@ namespace Trains.NET.Rendering.Software
         }
         public void Clear(Color color) => _canvas.Clear(ColorToPixel(color));
 
-        public void DrawText(string text, float x, float y, PaintBrush paint)
-        {
-            // TODO: DrawText
-            // throw new NotImplementedException();
-            // Eat it!
-        }
-        public void GradientRect(float x, float y, float width, float height, Color start, Color end)
-        {
-            // TODO: GradientRect
-            // throw new NotImplementedException();
-            // Eat it!
-        }
-        public void DrawCircle(float x, float y, float radius, PaintBrush paint)
-        {
-            // TODO: DrawCircle
-            // throw new NotImplementedException();
-            // Eat it!
-        }
+        // TODO: Text alignment
+        public void DrawText(string text, float x, float y, PaintBrush paint) =>
+            _canvas.DrawText(new Point(x, y),
+                                text,
+                                ColorToPixel(paint.Color ?? Defaults.Color),
+                                paint.TextSize ?? Defaults.TextSize);
+
+
+        // TODO: Add gradients
+        public void GradientRect(float x, float y, float width, float height, Color start, Color end) =>
+            DrawRect(x, y, width, height, new PaintBrush {
+                Color = start,
+                Style = PaintStyle.Fill
+            });
+        public void DrawCircle(float x, float y, float radius, PaintBrush paint) =>
+            _canvas.DrawCircle(new Point(x, y),
+                                radius,
+                                ColorToPixel(paint.Color ?? Defaults.Color));
 
         public void DrawLine(float x1, float y1, float x2, float y2, PaintBrush paint) =>
             _canvas.DrawLine(new Point(x1, y1), 
