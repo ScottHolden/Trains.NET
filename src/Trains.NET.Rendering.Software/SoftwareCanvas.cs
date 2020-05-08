@@ -12,10 +12,10 @@ namespace Trains.NET.Rendering.Software
 
         private static class Defaults
         {
-            public static readonly int StrokeWidth = 1;
-            public static readonly PaintStyle PaintStyle = PaintStyle.Stroke;
+            public const int StrokeWidth = 1;
+            public const PaintStyle PaintStyle = PaintStyle.Stroke;
+            public const int TextSize = 10;
             public static readonly Color Color = Colors.Black;
-            public static readonly int TextSize = 10;
         }
 
         public SoftwareCanvas(int width, int height)
