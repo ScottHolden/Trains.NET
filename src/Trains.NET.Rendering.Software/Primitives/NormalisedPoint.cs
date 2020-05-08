@@ -2,18 +2,15 @@
 
 namespace Trains.NET.Rendering.Software
 {
+    /// <summary>
+    /// This is exactly the same as a Point,
+    ///  more of just a framework thing to differentiate between points that
+    ///  haven't been normalised, and ones that are ready to use on the canvas array
+    /// </summary>
     internal struct NormalisedPoint : IEquatable<NormalisedPoint>
     {
         public float X { get; }
         public float Y { get; }
-
-        /// <summary>
-        /// This is exactly the same as a Point,
-        ///  more of just a framework thing to differentiate between points that
-        ///  haven't been normalised, and ones that are ready to use on the canvas array
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
         public NormalisedPoint(float x, float y)
         {
             this.X = x;

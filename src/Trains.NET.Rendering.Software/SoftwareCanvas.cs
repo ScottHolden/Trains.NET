@@ -25,7 +25,6 @@ namespace Trains.NET.Rendering.Software
         }
         public void Clear(Color color) => _canvas.Clear(ColorToPixel(color));
 
-        // TODO: Text alignment
         public void DrawText(string text, float x, float y, PaintBrush paint) =>
             _canvas.DrawText(new Point(x, y),
                                 text,
@@ -33,12 +32,12 @@ namespace Trains.NET.Rendering.Software
                                 paint.TextSize ?? Defaults.TextSize);
 
 
-        // TODO: Add gradients
         public void GradientRect(float x, float y, float width, float height, Color start, Color end) =>
             DrawRect(x, y, width, height, new PaintBrush {
                 Color = start,
                 Style = PaintStyle.Fill
             });
+
         public void DrawCircle(float x, float y, float radius, PaintBrush paint) =>
             _canvas.DrawCircle(new Point(x, y),
                                 radius,

@@ -10,11 +10,9 @@ namespace Trains.NET.Rendering.Software
         public byte Red { get; set; }
         public byte Green { get; set; }
         public byte Blue { get; set; }
-
         public Pixel(byte red, byte green, byte blue) : this(255, red, green, blue)
         {
         }
-
         public Pixel(byte alpha, byte red, byte green, byte blue)
         {
             this.Alpha = alpha;
@@ -22,7 +20,6 @@ namespace Trains.NET.Rendering.Software
             this.Green = green;
             this.Blue = blue;
         }
-
         public override bool Equals(object? obj) => obj is Pixel pixel && Equals(pixel);
         public bool Equals(Pixel other) => this.Alpha == other.Alpha &&
                                            this.Red == other.Red &&

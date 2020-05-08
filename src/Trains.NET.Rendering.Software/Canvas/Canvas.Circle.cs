@@ -42,7 +42,7 @@ namespace Trains.NET.Rendering.Software
             }
         }
 
-        public void DrawArc(Point point, float radius, Pixel source)
+        public void DrawArc(Point point, float radius, Pixel source, int strokeWidth)
         {
             // TODO: Arc
         }

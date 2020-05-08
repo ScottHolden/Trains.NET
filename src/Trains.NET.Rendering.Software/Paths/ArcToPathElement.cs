@@ -11,9 +11,8 @@
         }
         public override void Apply(Canvas canvas, Pixel source, int strokeWidth)
         {
-            // TODO: Arc Implementation
-            // throw new NotImplementedException();
-            // Eat it!
+            // TODO: Actual arc implementation
+            canvas.DrawArc(new Point(X, Y), _radius, source, strokeWidth);
         }
     }
 }
