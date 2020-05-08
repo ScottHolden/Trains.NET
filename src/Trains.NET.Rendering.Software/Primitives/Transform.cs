@@ -32,12 +32,20 @@ namespace Trains.NET.Rendering.Software
         public Transform Translate(Point value) => Translate(value.X, value.Y);
         public Transform Translate(float x, float y)
         {
-            // This is math
-            // Need to normaise 
-            throw new Exception("Haven't done this yet!");
-            return new Transform(this.X + x, this.Y + y, 0);
+            if(this.Rotation == 0)
+            {
+                return new Transform(this.X + x, this.Y + y, this.Rotation);
+            }
+
+            float cos = (float)Math.Cos(this.Rotation);
+            float sin = (float)Math.Sin(this.Rotation);
+
+            float xRotated = x * cos - y * sin;
+            float yRotated = x * sin + y * cos;
+
+            return new Transform(this.X + xRotated, this.Y + yRotated, 0);
         }
-        public Transform Rotate(float rotation) => new Transform(this.X, this.Y, this.Rotation + rotation);
+        public Transform Rotate(float rotation) => new Transform(this.X, this.Y, rotation);
 
         public NormalisedPoint NormalisePoint(Point point) => Translate(point.X, point.Y).ToNormalisedPoint();
 
