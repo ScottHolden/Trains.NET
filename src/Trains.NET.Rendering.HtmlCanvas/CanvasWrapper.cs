@@ -54,11 +54,6 @@ namespace Trains.NET.Rendering.HtmlCanvas
             AddCommand("canvas.clear", color.ToString());
         }
 
-        public void ClipRect(Rectangle rect, ClipOperation operation, bool antialias)
-        {
-            AddCommand("canvas.clipRect", rect.Left, rect.Top, rect.Right, rect.Bottom);
-        }
-
         public void DrawCircle(float x, float y, float radius, PaintBrush paint)
         {
             AddCommand("canvas.drawCircle", x, y, radius, paint.StrokeWidth, paint.Color.ToString());

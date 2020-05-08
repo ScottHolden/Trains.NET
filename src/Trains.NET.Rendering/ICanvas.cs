@@ -9,7 +9,6 @@
         public void Restore();
         public void DrawText(string text, float x, float y, PaintBrush paint);
         public void DrawLine(float x1, float y1, float x2, float y2, PaintBrush grid);
-        public void ClipRect(Rectangle sKRect, ClipOperation intersect, bool v);
         public void RotateDegrees(float degrees, float x, float y);
         public void DrawPath(IPath trackPath, PaintBrush straightTrackPaint);
         public void RotateDegrees(float degrees);

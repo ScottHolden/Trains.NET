@@ -14,9 +14,6 @@ namespace Trains.NET.Rendering.Skia
         public void Clear(Color color)
             => _canvas.Clear(color.ToSkia());
 
-        public void ClipRect(Rectangle rect, ClipOperation operation, bool antialias)
-            => _canvas.ClipRect(rect.ToSkia(), operation.ToSkia(), antialias);
-
         public void DrawCircle(float x, float y, float radius, PaintBrush paint)
             => _canvas.DrawCircle(x, y, radius, paint.ToSkia());
 

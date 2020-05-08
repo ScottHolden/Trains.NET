@@ -51,7 +51,6 @@ namespace Trains.NET.Rendering
             canvas.Save();
             canvas.Translate(1, 1);
             canvas.Clear(Colors.White);
-            canvas.ClipRect(new Rectangle(0, 0, _width + 2, _height + 2), ClipOperation.Intersect, false);
 
             foreach (ILayerRenderer renderer in _boardRenderers)
             {

@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trains.NET.Rendering.Skia",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trains.NET.Rendering.HtmlCanvas", "src\Trains.NET.Rendering.HtmlCanvas\Trains.NET.Rendering.HtmlCanvas.csproj", "{D58D7587-3DFE-4E80-AD0D-B9A25FA560BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trains.NET.Instrumentation", "src\Trains.NET.Instrumentation\Trains.NET.Instrumentation.csproj", "{E7FE632B-2E2A-437D-B674-0507C80B4155}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trains.NET.Instrumentation", "src\Trains.NET.Instrumentation\Trains.NET.Instrumentation.csproj", "{E7FE632B-2E2A-437D-B674-0507C80B4155}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trains.NET.Rendering.Software", "src\Trains.NET.Rendering.Software\Trains.NET.Rendering.Software.csproj", "{590F11DF-258B-4292-8F6B-85BC1CAD5243}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +81,10 @@ Global
 		{E7FE632B-2E2A-437D-B674-0507C80B4155}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7FE632B-2E2A-437D-B674-0507C80B4155}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7FE632B-2E2A-437D-B674-0507C80B4155}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590F11DF-258B-4292-8F6B-85BC1CAD5243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590F11DF-258B-4292-8F6B-85BC1CAD5243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590F11DF-258B-4292-8F6B-85BC1CAD5243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590F11DF-258B-4292-8F6B-85BC1CAD5243}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -93,6 +99,7 @@ Global
 		{C9AE2974-C1AC-4D04-9DEB-A0C77D1FF1A0} = {1BB744EF-DB08-4EAD-AD96-EA4742A198C6}
 		{D58D7587-3DFE-4E80-AD0D-B9A25FA560BB} = {1BB744EF-DB08-4EAD-AD96-EA4742A198C6}
 		{E7FE632B-2E2A-437D-B674-0507C80B4155} = {1BB744EF-DB08-4EAD-AD96-EA4742A198C6}
+		{590F11DF-258B-4292-8F6B-85BC1CAD5243} = {1BB744EF-DB08-4EAD-AD96-EA4742A198C6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8834C621-39E4-4AD6-85D0-97F46ADC88D6}
