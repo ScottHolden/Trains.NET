@@ -26,7 +26,6 @@ namespace Trains.NET.Rendering.Software
 
         public override bool Equals(object? obj) => obj is NormalisedPoint point && Equals(point);
         public bool Equals(NormalisedPoint other) => this.X == other.X && this.Y == other.Y;
-        public int ToIndex(int width) => (int)(this.Y * width + this.X);
         public override int GetHashCode()
         {
             int hashCode = 1861411795;

@@ -43,7 +43,7 @@ namespace Trains.NET.Rendering.Software
             float xRotated = x * cos - y * sin;
             float yRotated = x * sin + y * cos;
 
-            return new Transform(this.X + xRotated, this.Y + yRotated, 0);
+            return new Transform(this.X + xRotated, this.Y + yRotated, this.Rotation);
         }
         public Transform Rotate(float rotation) => new Transform(this.X, this.Y, rotation);
 

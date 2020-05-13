@@ -4,7 +4,7 @@ namespace Trains.NET.Rendering.Software
 {
     internal partial class Canvas
     {
-        public void DrawARGB(Stream output)
+        public void DrawArgb32(Stream output)
         {
             for (int i = 0; i < _canvas.Length; i++)
             {

@@ -24,7 +24,7 @@
             DrawLine(topLeft, bottomLeft, source, strokeWidth);
 
             DrawLine(topRight, bottomRight, source, strokeWidth);
-            DrawLine(topLeft, bottomRight, source, strokeWidth);
+            DrawLine(bottomLeft, bottomRight, source, strokeWidth);
         }
         private void FillRect(Point topLeft, Size size, Pixel source)
         {

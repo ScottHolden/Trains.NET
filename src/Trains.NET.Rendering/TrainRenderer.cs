@@ -4,7 +4,7 @@ using Trains.NET.Engine;
 
 namespace Trains.NET.Rendering
 {
-    internal class TrainRenderer : ITrainRenderer //, IDisposable
+    public class TrainRenderer : ITrainRenderer //, IDisposable
     {
         private readonly ITrackParameters _trackParameters;
         private readonly ITrainParameters _trainParameters;

@@ -5,7 +5,7 @@ using Trains.NET.Instrumentation;
 
 namespace Trains.NET.Engine
 {
-    internal class GameBoard : IGameBoard, IDisposable
+    public class GameBoard : IGameBoard, IDisposable
     {
         public static readonly float SpeedScaleModifier = 0.005f;
 

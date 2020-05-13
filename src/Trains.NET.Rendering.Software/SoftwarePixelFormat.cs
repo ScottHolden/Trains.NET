@@ -2,6 +2,6 @@
 {
     public enum SoftwarePixelFormat
     {
-        ARGB_4Byte
+        Argb32
     }
 }

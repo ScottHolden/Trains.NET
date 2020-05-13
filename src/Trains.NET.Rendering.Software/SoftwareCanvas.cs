@@ -13,7 +13,7 @@ namespace Trains.NET.Rendering.Software
         private static class Defaults
         {
             public const int StrokeWidth = 1;
-            public const PaintStyle PaintStyle = PaintStyle.Stroke;
+            public const PaintStyle PaintStyle = Trains.NET.Rendering.PaintStyle.Stroke;
             public const int TextSize = 10;
             public static readonly Color Color = Colors.Black;
         }
@@ -79,8 +79,8 @@ namespace Trains.NET.Rendering.Software
         {
             switch (pixelFormat)
             {
-                case SoftwarePixelFormat.ARGB_4Byte:
-                    _canvas.DrawARGB(stream);
+                case SoftwarePixelFormat.Argb32:
+                    _canvas.DrawArgb32(stream);
                     break;
                 default:
                     throw new Exception("Color mode not supported");

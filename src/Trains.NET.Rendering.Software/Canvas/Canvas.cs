@@ -5,7 +5,7 @@ namespace Trains.NET.Rendering.Software
     
     internal partial class Canvas
     {
-        private const int PixelDensity = 1;
+        private const float PixelDensity = 1;
         private readonly int _width;
         private readonly int _height;
         private readonly Pixel[] _canvas;
@@ -28,6 +28,17 @@ namespace Trains.NET.Rendering.Software
             }
         }
 
-        private void DrawNormalisedPoint(NormalisedPoint normalisedPoint, Pixel source) => _canvas[normalisedPoint.ToIndex(_width)] = source;
+        private void DrawNormalisedPoint(NormalisedPoint normalisedPoint, Pixel source)
+        {
+            int x = (int)normalisedPoint.X;
+            int y = (int)normalisedPoint.Y;
+            int index = y * _width + x;
+            if (x >= 0 && x < _width &&
+                y >= 0 && y < _height &&
+                index < _canvas.Length)
+            {
+                _canvas[index] = source;
+            }
+        }
     }
 }

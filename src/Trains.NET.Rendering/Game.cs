@@ -6,7 +6,7 @@ using Trains.NET.Instrumentation;
 
 namespace Trains.NET.Rendering
 {
-    internal class Game : IGame
+    public class Game : IGame
     {
         private int _width;
         private int _height;

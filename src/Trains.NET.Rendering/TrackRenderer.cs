@@ -2,7 +2,7 @@
 
 namespace Trains.NET.Rendering
 {
-    internal class TrackRenderer : ITrackRenderer //, IDisposable
+    public class TrackRenderer : ITrackRenderer //, IDisposable
     {
         private readonly ITrackParameters _parameters;
         private readonly IPathFactory _pathFactory;
