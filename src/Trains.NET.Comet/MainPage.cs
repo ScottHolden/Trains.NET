@@ -6,6 +6,7 @@ using Comet;
 using Trains.NET.Engine;
 using Trains.NET.Engine.Tracks;
 using Trains.NET.Rendering;
+using Trains.NET.Rendering.Skia;
 using Trains.NET.Rendering.Tracks;
 
 namespace Trains.NET.Comet
@@ -31,9 +32,12 @@ namespace Trains.NET.Comet
                         ITrackLayout trackLayout,
                         IGameStorage gameStorage,
                         ITimer gameTimer,
-                        Factory<IToolPreviewer> previewerFactory)
+                        Factory<IToolPreviewer> previewerFactory,
+                        IDrawOut draw)
         {
             this.Title("Trains - " + ThisAssembly.AssemblyInformationalVersion);
+
+            draw.Save();
 
             var controlDelegate = new TrainsDelegate(game, pixelMapper, previewerFactory);
             _miniMapDelegate = new MiniMapDelegate(trackLayout, trackParameters, pixelMapper);
