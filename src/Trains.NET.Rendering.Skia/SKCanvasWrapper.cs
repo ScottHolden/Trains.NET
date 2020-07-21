@@ -7,7 +7,7 @@ namespace Trains.NET.Rendering.Skia
     public class SKCanvasWrapper : ICanvas
     {
         private static readonly Dictionary<PaintBrush, SKPaint> s_paintCache = new Dictionary<PaintBrush, SKPaint>();
-
+        
         private readonly SkiaSharp.SKCanvas _canvas;
 
         public SKCanvasWrapper(SkiaSharp.SKCanvas canvas)
@@ -35,8 +35,15 @@ namespace Trains.NET.Rendering.Skia
             ((IDisposable)_canvas).Dispose();
         }
 
+        private static readonly SKPaint s_highQualityPaint = new SKPaint() { FilterQuality = SKFilterQuality.Low };
+        private static readonly SKPaint s_lowQualityPaint = new SKPaint() { FilterQuality = SKFilterQuality.None };
+
         public void DrawBitmap(IBitmap bitmap, int width, int height)
-            => _canvas.DrawBitmap(bitmap.ToSkia(), width, height);
+        {
+            SKBitmap skiaBitmap = bitmap.ToSkia();
+            SKPaint paint = skiaBitmap.Width * skiaBitmap.Height < 1400000 ? s_highQualityPaint : s_lowQualityPaint;
+            _canvas.DrawBitmap(skiaBitmap, width, height, paint);
+        }
 
 
         public void DrawCircle(float x, float y, float radius, PaintBrush paint)

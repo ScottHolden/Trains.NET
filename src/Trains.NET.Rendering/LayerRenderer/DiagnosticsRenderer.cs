@@ -13,7 +13,7 @@ namespace Trains.NET.Rendering
             TextAlign = TextAlign.Left,
         };
 
-        public bool Enabled { get; set; }
+        public bool Enabled { get; set; } = true;
 
         public string Name => "Diagnostics";
 
