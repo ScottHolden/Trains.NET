@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Trains.NET.Engine;
 using Trains.NET.Instrumentation;
+using Trains.NET.Rendering.Buildings;
 using Trains.NET.Rendering.LayerRenderer;
 
 namespace Trains.NET.Rendering
@@ -16,19 +17,27 @@ namespace Trains.NET.Rendering
         private readonly IEnumerable<ILayerRenderer> _boardRenderers;
         private readonly IPixelMapper _pixelMapper;
         private readonly IBitmapFactory _bitmapFactory;
+        private readonly ITrackParameters _param;
         private readonly PerSecondTimedStat _skiaFps = InstrumentationBag.Add<PerSecondTimedStat>("SkiaFPS");
         private readonly ElapsedMillisecondsTimedStat _skiaDrawTime = InstrumentationBag.Add<ElapsedMillisecondsTimedStat>("SkiaDrawTime");
         private readonly Dictionary<ILayerRenderer, ElapsedMillisecondsTimedStat> _renderLayerDrawTimes;
         private readonly Dictionary<ILayerRenderer, IBitmap> _bitmapBuffer = new Dictionary<ILayerRenderer, IBitmap>();
+        private readonly ICargoPalletRenderer _cargoPallet;
 
-        public Game(IGameBoard gameBoard, OrderedList<ILayerRenderer> boardRenderers, IPixelMapper pixelMapper, IBitmapFactory bitmapFactory)
+        public Game(IGameBoard gameBoard, OrderedList<ILayerRenderer> boardRenderers, IPixelMapper pixelMapper, IBitmapFactory bitmapFactory, ITrackParameters param)
         {
             _gameBoard = gameBoard;
             _boardRenderers = boardRenderers;
             _pixelMapper = pixelMapper;
             _bitmapFactory = bitmapFactory;
+            _param = param;
             _renderLayerDrawTimes = _boardRenderers.ToDictionary(x => x, x => InstrumentationBag.Add<ElapsedMillisecondsTimedStat>(x.Name.Replace(" ", "") + "DrawTime"));
             _pixelMapper.ViewPortChanged += (s, e) => _needsBufferReset = true;
+
+            _cargoPallet = new CargoPalletRenderer(new TrackParameters()
+            {
+                CellSize = 40
+            }, bitmapFactory);
         }
 
         public void SetSize(int width, int height)
@@ -55,7 +64,6 @@ namespace Trains.NET.Rendering
             }
             _bitmapBuffer.Clear();
         }
-
         public void Render(ICanvas canvas)
         {
             if (_width == 0 || _height == 0) return;
@@ -68,6 +76,25 @@ namespace Trains.NET.Rendering
 
             canvas.Save();
             canvas.Clear(Colors.VeryLightGray);
+
+            canvas.Save();
+            canvas.Translate(300, 100);
+            canvas.Save();
+            for (int i=0; i<100; i++)
+            {
+                canvas.Translate(50, 0);
+                if (i%10 < 1)
+                {
+                    canvas.Restore();
+                    canvas.Save();
+                    canvas.Translate(0, 50 * i / 10);
+                }
+                _cargoPallet.Render(canvas, i);
+            }
+            canvas.Restore();
+
+
+            canvas.Restore();
 
             foreach (ILayerRenderer renderer in _boardRenderers)
             {
