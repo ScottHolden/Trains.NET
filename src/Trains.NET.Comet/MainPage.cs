@@ -57,11 +57,12 @@ namespace Trains.NET.Comet
                         new Spacer(),
                         new HStack()
                         {
-                            new Button("      +      ", ()=> Zoom(1))
-                                .FillHorizontal(),
-                            new Button("      -      ", ()=> Zoom(-1))
-                                .FillHorizontal(),
-                        }.FillHorizontal(),
+                            new Button("  +  ", ()=> Zoom(1))
+                                .Frame(45),
+                            new Spacer(),
+                            new Button("  -  ", ()=> Zoom(-1))
+                                .Frame(45),
+                        }.Frame(100),
                         new Spacer(),
                         new Button("Configuration", ()=> _configurationShown.Value = !_configurationShown.Value),
                         new DrawableControl(_miniMapDelegate).Frame(height: 100)
