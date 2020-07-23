@@ -13,6 +13,7 @@ namespace Trains.NET.Comet
     {
         private bool _redraw = true;
         private bool _shouldDraw;
+        private float _dpi = 1.0f;
         private readonly ITrackLayout _trackLayout;
         private readonly IPixelMapper _pixelMapper;
         private readonly ITrackParameters _trackParameters;
@@ -48,6 +49,14 @@ namespace Trains.NET.Comet
             if (dirtyRect.IsEmpty) return;
             if (!_redraw) return;
 
+            // Pull DPI from caller scale
+            float newDpi = canvas.TotalMatrix.ScaleX;
+            if (float.IsFinite(newDpi))
+            {
+                _dpi = newDpi;
+            }
+            canvas.RestoreToCount(-1);
+
             const int maxGridSize = PixelMapper.MaxGridSize;
             using var bitmap = new SKBitmap(maxGridSize, maxGridSize);
 
@@ -74,10 +83,14 @@ namespace Trains.NET.Comet
             return true;
         }
 
+        private (float x, float y) ConvertDPIScaledPointToRawPosition(PointF point) => (point.X * _dpi, point.Y * _dpi);
+
         public override void DragInteraction(PointF[] points)
         {
-            float x = points[0].X * (PixelMapper.MaxGridSize / 100);
-            float y = points[0].Y * (PixelMapper.MaxGridSize / 100);
+            (float mouseX, float mouseY) = ConvertDPIScaledPointToRawPosition(points[0]);
+
+            float x = mouseX * (PixelMapper.MaxGridSize / 100);
+            float y = mouseY * (PixelMapper.MaxGridSize / 100);
 
             x -= _pixelMapper.ViewPortWidth / 2;
             y -= _pixelMapper.ViewPortHeight / 2;
