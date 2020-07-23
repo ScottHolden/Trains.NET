@@ -86,7 +86,8 @@ namespace Trains.NET.Engine
                 timeStep -= loopStep;
             }
         }
-
+        
+        // Super silly pre-optimisation of movement code :P
         private readonly Dictionary<(int, int), IMovable> _movableCache = new();
         private readonly List<IMovable> _movableSnapshot = new();
 
