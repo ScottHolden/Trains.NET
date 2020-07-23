@@ -7,5 +7,6 @@
         IPath BuildCornerTrackPath();
         IPath BuildCornerPlankPath();
         IPath BuildCornerPlankPath(int plankCount);
+        void FlushCache();
     }
 }

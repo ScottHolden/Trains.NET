@@ -5,33 +5,41 @@ namespace Trains.NET.Rendering
 {
     public class TrackRenderer : ITrackRenderer
     {
-        private bool _cacheBitmaps = false;
+        private bool _cacheBitmaps = true;
 
         private readonly ITrackParameters _parameters;
         private readonly IBitmapFactory _bitmapFactory;
-
-        private readonly PaintBrush _trackEdge;
-        private readonly PaintBrush _trackClear;
-        private readonly PaintBrush _plankPaint;
+        private readonly ITrackPathBuilder _trackPathBuilder;
 
         private readonly Dictionary<TrackDirection, IBitmap> _cachedTracks = new Dictionary<TrackDirection, IBitmap>();
 
-        private readonly IPath _cornerTrackPath;
-        private readonly IPath _cornerPlankPath;
-        private readonly IPath _cornerSinglePlankPath;
-        private readonly IPath _horizontalTrackPath;
-        private readonly IPath _horizontalPlankPath;
+        private PaintBrush _trackEdge;
+        private PaintBrush _trackClear;
+        private PaintBrush _plankPaint;
+        private IPath _cornerTrackPath;
+        private IPath _cornerPlankPath;
+        private IPath _cornerSinglePlankPath;
+        private IPath _horizontalTrackPath;
+        private IPath _horizontalPlankPath;
 
         public TrackRenderer(ITrackParameters parameters, IBitmapFactory bitmapFactory, ITrackPathBuilder trackPathBuilder)
         {
             _parameters = parameters;
             _bitmapFactory = bitmapFactory;
+            _trackPathBuilder = trackPathBuilder;
+            FlushCache();
+        }
 
-            _cornerTrackPath = trackPathBuilder.BuildCornerTrackPath();
-            _cornerPlankPath = trackPathBuilder.BuildCornerPlankPath();
-            _cornerSinglePlankPath = trackPathBuilder.BuildCornerPlankPath(1);
-            _horizontalTrackPath = trackPathBuilder.BuildHorizontalTrackPath();
-            _horizontalPlankPath = trackPathBuilder.BuildHorizontalPlankPath();
+        public void FlushCache()
+        {
+            _cachedTracks.Clear();
+            _trackPathBuilder.FlushCache();
+
+            _cornerTrackPath = _trackPathBuilder.BuildCornerTrackPath();
+            _cornerPlankPath = _trackPathBuilder.BuildCornerPlankPath();
+            _cornerSinglePlankPath = _trackPathBuilder.BuildCornerPlankPath(1);
+            _horizontalTrackPath = _trackPathBuilder.BuildHorizontalTrackPath();
+            _horizontalPlankPath = _trackPathBuilder.BuildHorizontalPlankPath();
 
             _plankPaint = new PaintBrush
             {

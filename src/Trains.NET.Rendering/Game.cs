@@ -47,6 +47,15 @@ namespace Trains.NET.Rendering
             return sb.ToString();
         }
 
+        public void FlushCache()
+        {
+            foreach (ILayerRenderer renderer in _boardRenderers)
+            {
+                renderer.FlushCache();
+            }
+            _bitmapBuffer.Clear();
+        }
+
         public void SetSize(int width, int height)
         {
             (int columns, int rows) = _pixelMapper.ViewPortPixelsToCoords(width, height);

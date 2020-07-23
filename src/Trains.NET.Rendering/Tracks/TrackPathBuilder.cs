@@ -4,10 +4,10 @@ namespace Trains.NET.Rendering
 {
     public class TrackPathBuilder : ITrackPathBuilder
     {
-        private readonly float _innerTrackOffset;
-        private readonly float _outerTrackOffset;
-        private readonly float _innerPlankOffset;
-        private readonly float _outerPlankOffset;
+        private float _innerTrackOffset;
+        private float _outerTrackOffset;
+        private float _innerPlankOffset;
+        private float _outerPlankOffset;
         private readonly ITrackParameters _parameters;
         private readonly IPathFactory _pathFactory;
 
@@ -16,6 +16,11 @@ namespace Trains.NET.Rendering
             _parameters = parameters;
             _pathFactory = pathFactory;
 
+            FlushCache();
+        }
+
+        public void FlushCache()
+        {
             _innerTrackOffset = _parameters.CellSize / 2.0f - _parameters.TrackWidth / 2.0f;
             _outerTrackOffset = _parameters.CellSize / 2.0f + _parameters.TrackWidth / 2.0f;
             _innerPlankOffset = _parameters.CellSize / 2.0f - _parameters.PlankLength / 2.0f;

@@ -13,7 +13,9 @@ namespace Trains.NET.Comet
     public class MainPage : View
     {
         private readonly State<bool> _configurationShown = false;
-
+        private readonly IGame _game;
+        private readonly IPixelMapper _pixelMapper;
+        private readonly ITrackParameters _trackParameters;
         private readonly ITrackLayout _trackLayout;
         private readonly IGameStorage _gameStorage;
         private readonly MiniMapDelegate _miniMapDelegate;
@@ -53,6 +55,14 @@ namespace Trains.NET.Comet
                         _configurationShown || !trainControls.BuildMode ? null :
                             CreateCommandControls(commands),
                         new Spacer(),
+                        new HStack()
+                        {
+                            new Button("      +      ", ()=> Zoom(1))
+                                .FillHorizontal(),
+                            new Button("      -      ", ()=> Zoom(-1))
+                                .FillHorizontal(),
+                        }.FillHorizontal(),
+                        new Spacer(),
                         new Button("Configuration", ()=> _configurationShown.Value = !_configurationShown.Value),
                         new DrawableControl(_miniMapDelegate).Frame(height: 100)
                     }.Frame(100, alignment: Alignment.Top),
@@ -80,6 +90,9 @@ namespace Trains.NET.Comet
                     _miniMapDelegate.Invalidate();
                 });
             };
+            _game = game;
+            _pixelMapper = pixelMapper;
+            _trackParameters = trackParameters;
             _trackLayout = trackLayout;
             _gameStorage = gameStorage;
 
@@ -96,6 +109,19 @@ namespace Trains.NET.Comet
         public void Save()
         {
             _gameStorage.WriteTracks(_trackLayout);
+        }
+
+        private void Zoom(int delta)
+        {
+            int currentZoom = _trackParameters.CellSize / 20;
+
+            int newZoom = currentZoom + delta;
+            if(newZoom >= 1 && newZoom <= 12)
+            {
+                _trackParameters.CellSize = newZoom * 20;
+                _game.FlushCache();
+                _pixelMapper.AdjustViewPort(_trackParameters.CellSize * -delta, _trackParameters.CellSize * -delta);
+            }
         }
 
         public void Redraw(Size newSize)

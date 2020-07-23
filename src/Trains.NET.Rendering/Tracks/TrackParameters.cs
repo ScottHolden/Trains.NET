@@ -2,7 +2,7 @@
 {
     internal class TrackParameters : ITrackParameters
     {
-        public int CellSize { get; }
+        public int CellSize { get; set; }
 
         public int NumPlanks => 3;
         public int NumCornerPlanks => this.NumPlanks + 1;

@@ -48,5 +48,7 @@ namespace Trains.NET.Rendering
             }
             _dirty = false;
         }
+
+        public void FlushCache() => _trackRenderer.FlushCache();
     }
 }
