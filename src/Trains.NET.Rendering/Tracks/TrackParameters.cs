@@ -2,27 +2,22 @@
 {
     internal class TrackParameters : ITrackParameters
     {
-        public int CellSize { get; set; }
-        
-        public int NumPlanks { get; set; }
-        public int NumCornerPlanks { get; set; }
+        public int CellSize { get; }
 
-        public float PlankLength { get; set; }
-        public float PlankWidth { get; set; }
-        public int TrackWidth { get; set; }
-        public float RailWidth { get; set; }
-        public float RailTopWidth { get; set; }
+        public int NumPlanks => 3;
+        public int NumCornerPlanks => this.NumPlanks + 1;
+
+        public float PlankLength => 26 * this.DrawScale;
+        public float PlankWidth => 4.0f * this.DrawScale;
+        public int TrackWidth => (int)(12 * this.DrawScale);
+        public float RailWidth => 4f * this.DrawScale;
+        public float RailTopWidth => 2.75f * this.DrawScale;
+
+        public float DrawScale => this.CellSize / 40.0f;
 
         public TrackParameters()
         {
-            this.CellSize = 40;
-            this.PlankLength = 26;
-            this.PlankWidth = 4.0f;
-            this.NumPlanks = 3;
-            this.NumCornerPlanks = this.NumPlanks + 1;
-            this.TrackWidth = 12;
-            this.RailWidth = 4f;
-            this.RailTopWidth = 2.75f;
+            this.CellSize = 200;
         }
     }
 }

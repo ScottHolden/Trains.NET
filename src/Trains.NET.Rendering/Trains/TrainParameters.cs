@@ -2,12 +2,21 @@
 {
     internal class TrainParameters : ITrainParameters
     {
-        public float RearHeight { get; set; } = 22;
+        private readonly ITrackParameters _trackParameters;
 
-        public float RearWidth { get; set; } = 10;
+        public float RearHeight => 22 * _trackParameters.DrawScale;
 
-        public float HeadWidth { get; set; } = 25;
+        public float RearWidth => 10 * _trackParameters.DrawScale;
 
-        public float HeadHeight { get; set; } = 16;
+        public float HeadWidth => 25 * _trackParameters.DrawScale;
+
+        public float HeadHeight => 16 * _trackParameters.DrawScale;
+
+        public float OutlineWidth => 2 * _trackParameters.DrawScale;
+
+        public TrainParameters(ITrackParameters trackParameters)
+        {
+            _trackParameters = trackParameters;
+        }
     }
 }

@@ -87,14 +87,29 @@ namespace Trains.NET.Engine
             }
         }
 
+        private readonly Dictionary<(int, int), IMovable> _movableCache = new();
+        private readonly List<IMovable> _movableSnapshot = new();
+
         private void DoGameLoopStep(float timeStep)
         {
             _takenTracks.Clear();
 
-            foreach (Train train in _movables)
+            _movableCache.Clear();
+            _movableSnapshot.Clear();
+            for (int i = 0; i < _movables.Count; i++)
+            {
+                if (i < _movables.Count && _movables[i] is not null)
+                {
+                    _movableCache[(_movables[i].Column, _movables[i].Row)] = _movables[i];
+                    _movableSnapshot.Add(_movables[i]);
+                }
+            }
+
+            foreach (Train train in _movableSnapshot)
             {
                 // Claim the track we are currently on, distance of 0
-                if (_trackLayout.TryGet(train.Column, train.Row, out Track? myTrack))
+                if (_trackLayout.TryGet(train.Column, train.Row, out Track? myTrack) &&
+                    !_takenTracks.ContainsKey(myTrack))
                 {
                     _takenTracks.Add(myTrack, (train, 0));
                 }
@@ -162,8 +177,6 @@ namespace Trains.NET.Engine
                     return false;
                 }
 
-                IMovable? otherTrain = GetMovableAt(newPosition.Column, newPosition.Row);
-
                 if (!_trackLayout.TryGet(newPosition.Column, newPosition.Row, out Track? nextTrack))
                 {
                     break;
@@ -173,7 +186,7 @@ namespace Trains.NET.Engine
                 {
                     break;
                 }
-                if (otherTrain != null && otherTrain.UniqueID != train.UniqueID) // There is a train that isn't us
+                if (_movableCache.TryGetValue((newPosition.Column, newPosition.Row), out IMovable otherTrain) && otherTrain.UniqueID != train.UniqueID) // There is a train that isn't us
                 {
                     break;
                 }
@@ -327,6 +340,18 @@ namespace Trains.NET.Engine
             _gameLoopTimer?.Dispose();
         }
 
-        public IMovable? GetMovableAt(int column, int row) => _movables.FirstOrDefault(t => t is not null && t.Column == column && t.Row == row);
+        public IMovable? GetMovableAt(int column, int row)
+        {
+            for(int i=0; i< _movables.Count; i++)
+            {
+                if(_movables[i] is not null &&
+                    _movables[i].Column == column &&
+                    _movables[i].Row == row)
+                {
+                    return _movables[i];
+                }
+            }
+            return null;
+        }
     }
 }

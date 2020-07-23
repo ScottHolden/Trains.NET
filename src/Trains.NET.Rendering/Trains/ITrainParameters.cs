@@ -2,9 +2,10 @@
 {
     public interface ITrainParameters
     {
-        float RearHeight { get; set; }
-        float RearWidth { get; set; }
-        float HeadWidth { get; set; }
-        float HeadHeight { get; set; }
+        float RearHeight { get; }
+        float RearWidth { get; }
+        float HeadWidth { get;}
+        float HeadHeight { get; }
+        float OutlineWidth { get; }
     }
 }

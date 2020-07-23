@@ -2,13 +2,14 @@
 {
     public interface ITrackParameters
     {
-        int CellSize { get; set; }
-        float PlankLength { get; set; }
-        float PlankWidth { get; set; }
-        int NumPlanks { get; set; }
-        int NumCornerPlanks { get; set; }
-        int TrackWidth { get; set; }
-        float RailWidth { get; set; }
-        float RailTopWidth { get; set; }
+        int CellSize { get; }
+        float PlankLength { get; }
+        float PlankWidth { get; }
+        int NumPlanks { get;}
+        int NumCornerPlanks { get; }
+        int TrackWidth { get; }
+        float RailWidth { get; }
+        float RailTopWidth { get; }
+        float DrawScale { get; }
     }
 }
