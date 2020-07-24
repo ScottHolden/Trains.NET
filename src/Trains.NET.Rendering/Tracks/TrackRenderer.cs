@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Trains.NET.Engine;
 
 namespace Trains.NET.Rendering
@@ -106,9 +107,27 @@ namespace Trains.NET.Rendering
                 case TrackDirection.LeftRightUp:
                     DrawCorner(canvas, direction, track);
                     break;
+                case TrackDirection.HorizontalLeftUp:
+                case TrackDirection.HorizontalRightUp:
+                case TrackDirection.HorizontalLeftDown:
+                case TrackDirection.HorizontalRightDown:
+                case TrackDirection.VerticalLeftUp:
+                case TrackDirection.VerticalRightUp:
+                case TrackDirection.VerticalLeftDown:
+                case TrackDirection.VerticalRightDown:
+                    DrawTee(canvas, direction, track);
+                    break;
                 case TrackDirection.Undefined:
                 default:
                     break;
+            }
+        }
+
+        private void DrawTee(ICanvas canvas, TrackDirection direction, Track track)
+        {
+            foreach(TrackDirection subDir in direction.SeperateSubtracks())
+            {
+                DrawTrack(canvas, subDir, track);
             }
         }
 

@@ -88,7 +88,7 @@ namespace Trains.NET.Engine
                     }
                     else
                     {
-                        var mapping = track.AlternateState ? s_alternateTrackMappings : s_trackMapping;
+                        var mapping = track.AlternateState && s_alternateTrackMappings.ContainsKey(track.Direction) ? s_alternateTrackMappings : s_trackMapping;
                         sb.Append(mapping[track.Direction]);
                     }
                 }

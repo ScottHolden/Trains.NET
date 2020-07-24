@@ -17,6 +17,7 @@ namespace Trains.NET.Rendering
         private readonly IEnumerable<ILayerRenderer> _boardRenderers;
         private readonly IPixelMapper _pixelMapper;
         private readonly IBitmapFactory _bitmapFactory;
+        private readonly ITreeRenderer _tree;
         private readonly PerSecondTimedStat _skiaFps = InstrumentationBag.Add<PerSecondTimedStat>("Draw-FPS-Skia");
         private readonly ElapsedMillisecondsTimedStat _skiaDrawTime = InstrumentationBag.Add<ElapsedMillisecondsTimedStat>("Draw-Skia-AllUp");
         private readonly ElapsedMillisecondsTimedStat _skiaClearTime = InstrumentationBag.Add<ElapsedMillisecondsTimedStat>("Draw-Skia-Clear");
@@ -25,12 +26,13 @@ namespace Trains.NET.Rendering
         private readonly Dictionary<ILayerRenderer, ElapsedMillisecondsTimedStat> _renderCacheDrawTimes;
         private readonly Dictionary<ILayerRenderer, IBitmap> _bitmapBuffer = new();
 
-        public Game(IGameBoard gameBoard, OrderedList<ILayerRenderer> boardRenderers, IPixelMapper pixelMapper, IBitmapFactory bitmapFactory)
+        public Game(IGameBoard gameBoard, OrderedList<ILayerRenderer> boardRenderers, IPixelMapper pixelMapper, IBitmapFactory bitmapFactory, ITreeRenderer tree)
         {
             _gameBoard = gameBoard;
             _boardRenderers = boardRenderers;
             _pixelMapper = pixelMapper;
             _bitmapFactory = bitmapFactory;
+            _tree = tree;
             _renderLayerDrawTimes = _boardRenderers.ToDictionary(x => x, x => InstrumentationBag.Add<ElapsedMillisecondsTimedStat>(GetLayerDiagnosticsName(x)));
             _renderCacheDrawTimes = _boardRenderers.Where(x => x is ICachableLayerRenderer).ToDictionary(x => x, x => InstrumentationBag.Add<ElapsedMillisecondsTimedStat>("Draw-Cache-" + x.Name.Replace(" ", "")));
             _pixelMapper.ViewPortChanged += (s, e) => _needsBufferReset = true;
@@ -96,6 +98,11 @@ namespace Trains.NET.Rendering
             _skiaClearTime.Start();
             canvas.Clear(Colors.VeryLightGray);
             _skiaClearTime.Stop();
+
+            canvas.Save();
+            canvas.Translate(100,100);
+            _tree.Render(canvas, 1);
+            canvas.Restore();
 
             foreach (ILayerRenderer renderer in _boardRenderers)
             {
