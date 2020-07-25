@@ -125,15 +125,20 @@ namespace Trains.NET.Rendering
 
         private void DrawTee(ICanvas canvas, TrackDirection direction, Track track)
         {
-            foreach(TrackDirection subDir in direction.SeperateSubtracks())
-            {
-                DrawTrack(canvas, subDir, track);
-            }
+            TrackDirection[] subTracks = direction.SeperateSubtracks();
+
+            //for (int i= subTracks.Length - 1; i >=0; i--)
+            // { 
+            //    DrawTrack(canvas, subTracks[i], track);
+            //}
+
+            canvas.DrawPath(_horizontalPlankPath, _plankPaint);
+            DrawHorizontalTracks(canvas);
+            DrawCorner(canvas, TrackDirection.LeftUp, track);
         }
 
         private void DrawHorizontal(ICanvas canvas)
         {
-            
             canvas.DrawPath(_horizontalPlankPath, _plankPaint);
             DrawHorizontalTracks(canvas);
         }

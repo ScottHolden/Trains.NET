@@ -22,7 +22,7 @@ namespace Trains.Emoji
         public EmojiDrawer()
         {
             ITrackParameters trackParameters = new TrackParameters();
-            ITrainParameters trainParameters = new TrainParameters();
+            ITrainParameters trainParameters = new TrainParameters(trackParameters);
             IBitmapFactory bitmapFactory = new SKBitmapFactory();
             IPathFactory pathFactory = new SKPathFactory();
             ITrackPathBuilder trackPathBuilder = new TrackPathBuilder(trackParameters, pathFactory);
