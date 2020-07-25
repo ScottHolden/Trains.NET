@@ -35,18 +35,8 @@ namespace Trains.NET.Engine
         {
             while(_threadLoopEnabled)
             {
-                // If we are not enabled, or we have more than the CoarseSleepThreshold ms left until we need to invoke, sleep for 1 ms
-                while (_threadLoopEnabled && 
-                    (!_elapsedEventEnabled ||
-                    _stopwatch.ElapsedMilliseconds + CoarseSleepThreshold < _nextInvoke))
-                {
-                    Thread.Sleep(1);
-                }
-                // If we are not yet ready to invoke, then be kind to other threads & let them have some pie, but don't sleep as we are close
-                while (_threadLoopEnabled && _stopwatch.ElapsedMilliseconds < _nextInvoke)
-                {
-                    Thread.Sleep(0);
-                }
+                while (_threadLoopEnabled && _stopwatch.ElapsedMilliseconds < _nextInvoke) ;
+
                 if (_threadLoopEnabled && _elapsedEventEnabled)
                 {
                     long time = _stopwatch.ElapsedMilliseconds;

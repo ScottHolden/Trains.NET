@@ -99,10 +99,10 @@ namespace Trains.NET.Rendering
             canvas.Clear(Colors.VeryLightGray);
             _skiaClearTime.Stop();
 
-            canvas.Save();
+            /*canvas.Save();
             canvas.Translate(100,100);
             _tree.Render(canvas, 1);
-            canvas.Restore();
+            canvas.Restore();*/
 
             foreach (ILayerRenderer renderer in _boardRenderers)
             {
