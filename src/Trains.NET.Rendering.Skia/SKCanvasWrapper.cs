@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SkiaSharp;
 
 namespace Trains.NET.Rendering.Skia
@@ -87,5 +88,135 @@ namespace Trains.NET.Rendering.Skia
 
         public float MeasureText(string text, PaintBrush paint)
             => GetSKPaint(paint).MeasureText(text);
+
+        public void DrawVertexTriangleList(List<(float X, float Y)> points, List<Color> colors)
+        {
+            using var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill
+            };
+
+            _canvas.DrawVertices(SKVertexMode.Triangles, 
+                                 points.Select(x=>new SKPoint(x.X, x.Y)).ToArray(),
+                                 colors.Select(x=>x.ToSkia()).ToArray(),
+                                 paint);
+        }
+
+        public void DrawGradRect(int x, int y, int width, int height, Color topLeft, Color topRight, Color bottomLeft, Color bottomRight)
+        {
+            SKColor topLeftSkia = topLeft.ToSkia();
+            SKColor topRightSkia = topRight.ToSkia();
+            SKColor bottomLeftSkia = bottomLeft.ToSkia();
+            SKColor bottomRightSkia = bottomRight.ToSkia();
+
+            /*using var topLeftPaint = new SKPaint
+            {
+                Shader = SKShader.CreateSweepGradient(new SKPoint(x + width / 2, y + height / 2),
+                                                       new SKColor[] { bottomRightSkia, bottomLeftSkia, topLeftSkia, topRightSkia, bottomRightSkia }, null, SKMatrix.CreateRotationDegrees(45, x + width / 2, y + height / 2)
+                                                       )
+            };*/
+            //_canvas.RotateDegrees(45, x + width / 2, y + height / 2);
+            //_canvas.DrawRect(x, y, width, height, topLeftPaint);
+
+
+            /*
+            using var topLeftPaint = new SKPaint
+            {
+                Color = topLeftSkia,
+                Style = SKPaintStyle.Fill
+            };
+            _canvas.DrawRect(x, y, width / 2, height / 2, topLeftPaint);
+
+            using var topRightPaint = new SKPaint
+            {
+                Color = topRightSkia,
+                Style = SKPaintStyle.Fill
+            };
+            _canvas.DrawRect(x + width / 2, y, width / 2, height / 2, topRightPaint);
+
+            using var bottomLeftPaint = new SKPaint
+            {
+                Color = bottomLeftSkia,
+                Style = SKPaintStyle.Fill
+            };
+            _canvas.DrawRect(x, y + height / 2, width / 2, height / 2, bottomLeftPaint);
+
+            using var bottomRightPaint = new SKPaint
+            {
+                Color = bottomRightSkia,
+                Style = SKPaintStyle.Fill
+            };
+            _canvas.DrawRect(x + width / 2, y + height / 2, width / 2, height / 2, bottomRightPaint);
+            */
+
+
+            /*
+            float radius = (float)Math.Sqrt(width * width + width * width);
+
+            using var topLeftShader = SKShader.CreateRadialGradient(new SKPoint(x, y + height / 2),
+                                                       width,
+                                                       new SKColor[] { topLeftSkia, bottomRightSkia },
+                                                       SKShaderTileMode.Clamp);
+
+            using var topRightShader = SKShader.CreateRadialGradient(new SKPoint(x + width / 2, y),
+                                                       width,
+                                                       new SKColor[] { topRightSkia, bottomLeftSkia },
+                                                       SKShaderTileMode.Clamp);
+
+            using var bottomLeftShader = SKShader.CreateRadialGradient(new SKPoint(x + width / 2, y + height),
+                                                       width,
+                                                       new SKColor[] { bottomLeftSkia, topRightSkia },
+                                                       SKShaderTileMode.Clamp);
+
+            using var bottomRightShader = SKShader.CreateRadialGradient(new SKPoint(x + width, y + height / 2),
+                                                       width,
+                                                       new SKColor[] { bottomRightSkia, topLeftSkia },
+                                                       SKShaderTileMode.Clamp);
+
+            using var s1 = SKShader.CreateCompose(topLeftShader, topRightShader, SKBlendMode.Lighten);
+            using var s2 = SKShader.CreateCompose(bottomLeftShader, bottomRightShader, SKBlendMode.Lighten);
+            using var compShader = SKShader.CreateCompose(s1, s2, SKBlendMode.Lighten);
+
+            using var paint = new SKPaint
+            {
+                Shader = compShader
+            };
+            _canvas.DrawRect(x, y, width, height, paint);
+            */
+
+            SKPoint topLeftPoint = new SKPoint(x, y);
+            SKPoint topRightPoint = new SKPoint(x + width, y);
+            SKPoint bottomLeftPoint = new SKPoint(x, y + height);
+            SKPoint bottomRightPoint = new SKPoint(x + width, y + height);
+
+            SKPoint centerPoint = new SKPoint(x + width / 2, y + height / 2);
+
+            SKPoint[] triangles = new[]{
+                topLeftPoint, centerPoint, topRightPoint,
+                topRightPoint, centerPoint, bottomRightPoint,
+                bottomRightPoint, centerPoint, bottomLeftPoint,
+                bottomLeftPoint, centerPoint, topLeftPoint
+            };
+
+            SKColor centerSkia = new SKColor(
+                (byte)((topLeftSkia.Red + topRightSkia.Red + bottomLeftSkia.Red + bottomRightSkia.Red) / 4.0f),
+                (byte)((topLeftSkia.Green + topRightSkia.Green + bottomLeftSkia.Green + bottomRightSkia.Green) / 4.0f),
+                (byte)((topLeftSkia.Blue + topRightSkia.Blue + bottomLeftSkia.Blue + bottomRightSkia.Blue) / 4.0f)
+            );
+
+            SKColor[] triangleColors = new[] {
+                topLeftSkia, centerSkia, topRightSkia,
+                topRightSkia, centerSkia, bottomRightSkia,
+                bottomRightSkia, centerSkia, bottomLeftSkia,
+                bottomLeftSkia, centerSkia, topLeftSkia
+            };
+
+            using var paint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill
+            };
+
+            _canvas.DrawVertices(SKVertexMode.Triangles, triangles, triangleColors, paint);
+        }
     }
 }

@@ -33,13 +33,13 @@ namespace Trains.NET.Rendering
             {
                 Color colour = TerrainColourLookup.GetTerrainColour(terrain);
 
-                (int x, int y) = pixelMapper.CoordsToViewPortPixels(terrain.Column, terrain.Row);
-                canvas.DrawRect(x, y, pixelMapper.CellSize, pixelMapper.CellSize, new PaintBrush { Style = PaintStyle.Fill, Color = colour });
-                // Debug, this draws coord and height onto cells
-                //canvas.DrawText($"{terrain.Column},{terrain.Row}", x + 2, y + 0.3f * _gameParameters.CellSize, new PaintBrush { Style = PaintStyle.Fill, Color = Colors.Black });
-                //canvas.DrawText($"{terrain.Height}", x + 2, y + 0.7f * _gameParameters.CellSize, new PaintBrush { Style = PaintStyle.Fill, Color = Colors.Black });
-            }
+                (int x, int y, bool onScreen) = pixelMapper.CoordsToViewPortPixels(terrain.Column, terrain.Row);
 
+                if (!onScreen) continue;
+
+                canvas.DrawRect(x, y, pixelMapper.CellSize, pixelMapper.CellSize, new PaintBrush { Style = PaintStyle.Fill, Color = colour });
+            }
+            
             _dirty = false;
         }
     }

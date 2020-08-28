@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Trains.NET.Rendering
 {
@@ -20,5 +21,7 @@ namespace Trains.NET.Rendering
         void Scale(float scaleX, float scaleY);
         void DrawImage(IImage cachedImage, int x, int y);
         float MeasureText(string text, PaintBrush paint);
+        void DrawGradRect(int x, int y, int width, int height, Color topLeft, Color topRight, Color bottomLeft, Color bottomRight);
+        void DrawVertexTriangleList(List<(float X, float Y)> points, List<Color> colors);
     }
 }
