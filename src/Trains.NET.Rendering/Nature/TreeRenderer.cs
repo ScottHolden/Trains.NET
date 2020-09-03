@@ -59,6 +59,41 @@ namespace Trains.NET.Rendering
             // Draw a few top circles
             angleOffset = r.NextFloat(0, (float)(Math.PI / 2.0f));
             DrawTreeLayer(canvas, r, (int)(circleCount * 0.7), angleOffset, 0.5f, _topTreeBrush);
+
+            Mouse(canvas);
+        }
+
+        private static void Mouse(ICanvas canvas)
+        {
+            var a = new PaintBrush
+            {
+                Color = new Color("#444444"),
+                Style = PaintStyle.Fill,
+                IsAntialias = true
+            };
+            var b = new PaintBrush
+            {
+                Color = new Color("#777777"),
+                Style = PaintStyle.Fill,
+                IsAntialias = true
+            };
+            var c = new PaintBrush
+            {
+                Color = new Color("#221122"),
+                Style = PaintStyle.Stroke,
+                StrokeWidth = 3,
+                IsAntialias = true
+            };
+            canvas.DrawCircle(-25, -20, 20, a);
+            canvas.DrawCircle(25, -20, 20, a);
+            canvas.DrawCircle(0, 10, 30, b);
+            canvas.DrawLine(-10, 20, -40, 20, c);
+            canvas.DrawLine(-10, 20, -40, 0, c);
+            canvas.DrawLine(-10, 20, -40, 40, c);
+            canvas.DrawLine(10, 20, 40, 20, c);
+            canvas.DrawLine(10, 20, 40, 0, c);
+            canvas.DrawLine(10, 20, 40, 40, c);
+            canvas.DrawCircle(0, 10, 10, a);
         }
 
         private void DrawTreeLayer(ICanvas canvas, Random r, int circleCount, float angleOffset, float scale, PaintBrush brush)

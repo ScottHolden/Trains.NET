@@ -64,6 +64,37 @@ namespace Trains.NET.Rendering
 
             canvas.DrawCircle(startPos + _trainParameters.RearWidth + _trainParameters.HeadWidth - _trainParameters.SmokeStackOffset, 0, _trainParameters.SmokeStackRadius, smokeStack);
 
+            Cat(canvas, palette.FrontSectionEndColor);
+        }
+
+        private static void Cat(ICanvas canvas, Color color)
+        {
+            var a = new PaintBrush
+            {
+                Style = PaintStyle.Fill,
+                Color = color
+            };
+            var b = new PaintBrush
+            {
+                Style = PaintStyle.Fill,
+                Color = Colors.VeryDarkGray
+            };
+            var c = new PaintBrush
+            {
+                Style = PaintStyle.Stroke,
+                Color = Colors.VeryDarkGray,
+                StrokeWidth = 3
+            };
+
+            canvas.DrawCircle(41.35f, 0, 30, a);
+            canvas.DrawCircle(36.55f, -10, 5, b);
+            canvas.DrawCircle(36.55f, 10, 5, b);
+            canvas.DrawLine(53.75f, 5, 43.75f, 40, c);
+            canvas.DrawLine(53.75f, 5, 53.75f, 40, c);
+            canvas.DrawLine(53.75f, 5, 63.75f, 40, c);
+            canvas.DrawLine(53.75f, -5, 43.75f, -40, c);
+            canvas.DrawLine(53.75f, -5, 53.75f, -40, c);
+            canvas.DrawLine(53.75f, -5, 63.75f, -40, c);
         }
 
         public static void SetupCanvasToDrawTrain(ICanvas canvas, IMovable train)
